@@ -90,9 +90,6 @@ export function prepareAction(state: GameState, action: TurnAction): Prepared {
   const def = MOVES[moveId];
   const kind = def?.kind ?? (energyOf(moveId) > 0 ? "attack" : "attack");
   const rawAttack = kind === "attack" ? energyOf(moveId) : 0;
-  const converted = action.attackToDefense ?? 0;
-  if (!Number.isInteger(converted) || converted < 0 || converted > rawAttack)
-    throw Error("攻转防数值非法");
   if (
     kind === "attack" &&
     !isGroupAttack(moveId) &&
@@ -112,16 +109,16 @@ export function prepareAction(state: GameState, action: TurnAction): Prepared {
       consumed: false,
     },
     targetPlayerId: action.targetPlayerId,
-    attack: rawAttack - converted,
-    defense: (def?.defense ?? 0) + converted,
+    attack: rawAttack,
+    defense: def?.defense ?? 0,
     dodge: def?.direction,
     ingredients,
     kind,
   };
 }
 
-// 同步回合中，已锁定动作不会因玩家本回合死亡而失效。单体攻击先合计并消耗防御，
-// 群攻随后只取最高值，并继续消耗同一个防御池。
+// 同步回合中，已锁定动作不会因玩家本回合死亡而失效。互相指向对方的单体攻击
+// 先两两抵消，剩余的单体攻击再合计并消耗防御；群攻随后只取最高值。
 export function resolveRound(
   state: GameState,
   prepared: Prepared[],
@@ -146,6 +143,15 @@ export function resolveRound(
       const aimed =
         isGroupAttack(atk.moveId) || atk.targetPlayerId === target.id;
       if (!aimed) continue;
+      const counter = byId.get(target.id);
+      const attack =
+        !isGroupAttack(atk.moveId) &&
+        counter &&
+        !isGroupAttack(counter.moveId) &&
+        counter.targetPlayerId === atk.playerId
+          ? Math.max(0, atk.attack - counter.attack)
+          : atk.attack;
+      if (attack <= 0) continue;
       if (own?.dodge && !directionsOf(atk.moveId).has(own.dodge)) {
         events.push({
           type: "dodged",
@@ -154,8 +160,8 @@ export function resolveRound(
         });
         continue;
       }
-      if (isGroupAttack(atk.moveId)) group = Math.max(group, atk.attack);
-      else singles += atk.attack;
+      if (isGroupAttack(atk.moveId)) group = Math.max(group, attack);
+      else singles += attack;
     }
     const persistent = target.effects.reduce((s, e) => s + e.defense, 0);
     let defense = (own?.defense ?? 0) + persistent;

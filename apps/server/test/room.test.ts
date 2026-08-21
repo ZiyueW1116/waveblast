@@ -33,7 +33,6 @@ function action(
     round: 1,
     actionId,
     play: { type: "direct", moveId: "运" },
-    attackToDefense: 0,
   };
 }
 

@@ -8,7 +8,6 @@ export type TurnActionInput = {
   round: number;
   actionId: string;
   targetPlayerId?: PlayerId;
-  attackToDefense?: number;
   play:
     | { type: "direct"; moveId: MoveId }
     | {

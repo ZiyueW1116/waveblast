@@ -53,7 +53,6 @@ function App() {
   const [product, setProduct] = useState("小波");
   const [selected, setSelected] = useState<string[]>([]);
   const [target, setTarget] = useState("");
-  const [converted, setConverted] = useState(0);
 
   useEffect(() => {
     void requestJson<User>("/api/me")
@@ -174,7 +173,6 @@ function App() {
       actionId: crypto.randomUUID(),
       play,
       targetPlayerId: target || undefined,
-      attackToDefense: converted,
     };
 
     socket.emit("submit-action", action, (result: Acknowledgement) => {
@@ -310,15 +308,6 @@ function App() {
                   </option>
                 ))}
             </select>
-          </label>
-          <label>
-            攻击转防{" "}
-            <input
-              type="number"
-              min="0"
-              value={converted}
-              onChange={(event) => setConverted(Number(event.target.value))}
-            />
           </label>
           <button onClick={submitAction}>提交动作</button>
 

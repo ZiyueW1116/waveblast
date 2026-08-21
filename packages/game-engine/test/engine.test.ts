@@ -49,12 +49,22 @@ test("dodge avoids uncovered attack", () => {
   ]);
   assert.equal(r.state.players[1].armor, 0);
 });
-test("attack converts to defense", () => {
+test("mutual single attacks deal only the difference to the weaker side", () => {
+  const s = base();
+  const r = resolveRound(s, [
+    move("a", "大波", 3, 0, "b"),
+    move("b", "小波", 1, 0, "a"),
+  ]);
+  assert.equal(r.state.players[0].armor, 0);
+  assert.equal(r.state.players[1].armor, -2);
+});
+test("equal mutual single attacks cancel completely", () => {
   const s = base();
   const r = resolveRound(s, [
     move("a", "小波", 1, 0, "b"),
-    move("b", "冲拳", 0, 1, "a"),
+    move("b", "冲拳", 1, 0, "a"),
   ]);
+  assert.equal(r.state.players[0].armor, 0);
   assert.equal(r.state.players[1].armor, 0);
 });
 test("group attacks take maximum and exclude self", () => {

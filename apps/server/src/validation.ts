@@ -8,7 +8,6 @@ export const turnActionInputSchema = z
     round: z.number().int().positive(),
     actionId: z.string().uuid(),
     targetPlayerId: identifier.optional(),
-    attackToDefense: z.number().int().nonnegative().optional(),
     play: z.discriminatedUnion("type", [
       z.object({ type: z.literal("direct"), moveId: identifier }).strict(),
       z
