@@ -1,0 +1,1 @@
+{"name":"waveblast","private":true,"type":"module","workspaces":["apps/*","packages/*"],"scripts":{"dev":"npm run dev -w @game/server","dev:web":"npm run dev -w @game/web","test":"npm run test -w @game/engine","build":"npm run build --workspaces --if-present"},"devDependencies":{"typescript":"^5.7.3"}}
