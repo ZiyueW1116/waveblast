@@ -1,1 +1,6 @@
-{"name":"@game/data","version":"0.1.0","type":"module","exports":"./src/index.ts"}
+{
+  "name": "@game/data",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts"
+}
