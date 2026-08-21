@@ -1,1 +1,24 @@
-{"name":"waveblast","private":true,"type":"module","workspaces":["apps/*","packages/*"],"scripts":{"dev":"npm run dev -w @game/server","dev:web":"npm run dev -w @game/web","test":"npm run test -w @game/engine","build":"npm run build --workspaces --if-present"},"devDependencies":{"typescript":"^5.7.3"}}
+{
+  "name": "waveblast",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.0.0 || ^24.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @game/server",
+    "dev:web": "npm run dev -w @game/web",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "typescript": "^5.7.3"
+  }
+}

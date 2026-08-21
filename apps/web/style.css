@@ -1,1 +1,49 @@
-:root{font-family:system-ui;color:#203047;background:#eef2f7}main{max-width:760px;margin:40px auto;background:white;padding:28px;border-radius:16px;box-shadow:0 8px 30px #19324d22}form,section{display:grid;gap:10px;margin:18px 0;padding:16px;border:1px solid #dbe3ed;border-radius:10px}input,select,button{font:inherit;padding:10px;border:1px solid #aab8c8;border-radius:7px}button{cursor:pointer;background:#2458c6;color:white}.hint{color:#68768a;font-size:14px}.material{display:block;padding:6px}.material input{margin-right:8px}.material small{color:#8290a3}
+:root {
+  font-family: system-ui;
+  color: #203047;
+  background: #eef2f7;
+}
+main {
+  max-width: 760px;
+  margin: 40px auto;
+  background: white;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px #19324d22;
+}
+form,
+section {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 16px;
+  border: 1px solid #dbe3ed;
+  border-radius: 10px;
+}
+input,
+select,
+button {
+  font: inherit;
+  padding: 10px;
+  border: 1px solid #aab8c8;
+  border-radius: 7px;
+}
+button {
+  cursor: pointer;
+  background: #2458c6;
+  color: white;
+}
+.hint {
+  color: #68768a;
+  font-size: 14px;
+}
+.material {
+  display: block;
+  padding: 6px;
+}
+.material input {
+  margin-right: 8px;
+}
+.material small {
+  color: #8290a3;
+}
